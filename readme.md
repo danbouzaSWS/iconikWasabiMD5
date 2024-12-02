@@ -32,7 +32,7 @@ This Python script calculates MD5 checksums for files in a Wasabi bucket. It inc
     WASABI_BUCKET_NAME=your-wasabi-bucket-name
     WASABI_ENDPOINT_URL=https://s3.us-east-2.wasabisys.com
 
-##Usage
+## Usage
 
 1.  Run the script:
     ```bash 
