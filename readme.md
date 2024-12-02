@@ -17,24 +17,24 @@ This Python script calculates MD5 checksums for files in a Wasabi bucket. It inc
    cd wasabi-checksum
 
 2. Create Virtual Enviornment
-    python3 -m venv checksum
-    source checksum/bin/activate
+    python3 -m venv checksum<br />
+    source checksum/bin/activate<br />
 
 3. Install dependencies:
     pip install -r requirements.txt
 
 4. Create a .env file:
-    WASABI_ACCESS_KEY=your-wasabi-access-key
-    WASABI_SECRET_KEY=your-wasabi-secret-key
-    WASABI_BUCKET_NAME=your-wasabi-bucket-name
-    WASABI_ENDPOINT_URL=https://s3.us-east-2.wasabisys.com
+    WASABI_ACCESS_KEY=your-wasabi-access-key<br />
+    WASABI_SECRET_KEY=your-wasabi-secret-key<br />
+    WASABI_BUCKET_NAME=your-wasabi-bucket-name<br />
+    WASABI_ENDPOINT_URL=https://s3.us-east-2.wasabisys.com<br />
 
 5. Usage
-Run the script:
-    python checksum_boto.py --prefix some/path/within/bucket
-Enable Debugging for Detailed Logs:
-    python checksum_boto.py --prefix some/path/within/bucket --debug
-Adjust Threads for Speed: Increase the number of threads for faster processing (e.g., 16 threads):
-    python checksum_boto.py --prefix some/path/within/bucket --threads 16
+Run the script:<br />
+    python checksum_boto.py --prefix some/path/within/bucket<br />
+Enable Debugging for Detailed Logs:<br />
+    python checksum_boto.py --prefix some/path/within/bucket --debug<br />
+Adjust Threads for Speed: Increase the number of threads for faster processing (e.g., 16 threads):<br />
+    python checksum_boto.py --prefix some/path/within/bucket --threads 16<br />
 
 
