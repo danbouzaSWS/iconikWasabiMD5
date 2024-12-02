@@ -36,7 +36,7 @@ This Python script calculates MD5 checksums for files in a Wasabi bucket. It inc
 
 1.  Run the script:
     ```bash 
-    python checksum_boto.py --prefix some/path/within/bucke
+    python checksum_boto.py --prefix some/path/within/bucket
 2. Enable Debugging for Detailed Logs:
     ```bash 
     python checksum_boto.py --prefix some/path/within/bucket --debug
