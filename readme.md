@@ -16,7 +16,7 @@ This Python script calculates MD5 checksums for files in a Wasabi bucket. It inc
    git clone https://github.com/danbouzaSWS/wasabi-checksum.git
    cd wasabi-checksum
 
-2. Create Virtual Enviornment<br />
+2. Create Virtual Enviornment
    ```bash
    python3 -m venv checksum
     source checksum/bin/activate
