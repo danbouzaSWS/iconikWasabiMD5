@@ -32,14 +32,15 @@ This Python script calculates MD5 checksums for files in a Wasabi bucket. It inc
     WASABI_BUCKET_NAME=your-wasabi-bucket-name
     WASABI_ENDPOINT_URL=https://s3.us-east-2.wasabisys.com
 
-8. Usage
-### Run the script:
+##Usage
+
+1.  Run the script:
     ```bash 
     python checksum_boto.py --prefix some/path/within/bucke
-### Enable Debugging for Detailed Logs:
+2. Enable Debugging for Detailed Logs:
     ```bash 
     python checksum_boto.py --prefix some/path/within/bucket --debug
-### Adjust Threads for Speed: Increase the number of threads for faster processing (e.g., 16 threads):
+3. Adjust Threads for Speed: Increase the number of threads for faster processing (e.g., 16 threads):
     ```bash 
     python checksum_boto.py --prefix some/path/within/bucket --threads 16
 
