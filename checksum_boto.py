@@ -36,6 +36,17 @@ def rate_limited_get(s3_client, bucket_name, object_key):
     return s3_client.get_object(Bucket=bucket_name, Key=object_key)
 
 
+@retry(
+    retry=retry_if_exception_type(botocore.exceptions.ClientError),
+    stop=stop_after_attempt(5),
+    wait=wait_exponential(multiplier=1, min=1, max=16),
+)
+def rate_limited_put(s3_client, bucket_name, object_key, body):
+    """Rate-limited PUT operation with retry and backoff."""
+    time.sleep(1 / GET_LIMIT)  # Enforce rate limit
+    s3_client.put_object(Bucket=bucket_name, Key=object_key, Body=body)
+
+
 def calc_hash_md5(file_stream, file_size):
     """Calculate MD5 checksum for a given file stream."""
     md5 = hashlib.md5()
@@ -59,12 +70,27 @@ def calc_hash_md5(file_stream, file_size):
 
 
 def process_file(object_key, s3_client):
-    """Download file stream and calculate its MD5 checksum."""
+    """Download file stream, calculate its MD5 checksum, and upload it as a .md5 file."""
     try:
+        # Check if .md5 file already exists
+        md5_key = f"{object_key}.md5"
+        try:
+            s3_client.head_object(Bucket=BUCKET_NAME, Key=md5_key)
+            logging.info(f"Checksum file already exists for {object_key}. Skipping.")
+            return
+        except botocore.exceptions.ClientError as e:
+            if e.response['Error']['Code'] != '404':
+                raise
+
+        # Download the file and calculate its checksum
         response = rate_limited_get(s3_client, BUCKET_NAME, object_key)
         file_size = response['ContentLength']  # Get file size for progress bar
         md5_hash = calc_hash_md5(response['Body'], file_size)
-        logging.info(f"Checksum for {object_key}: {md5_hash}")
+
+        # Upload the checksum as a .md5 file
+        rate_limited_put(s3_client, BUCKET_NAME, md5_key, f"{md5_hash}  {object_key}\n")
+        logging.info(f"Uploaded checksum for {object_key} to {md5_key}")
+
     except Exception as e:
         logging.warning(f"Failed to process {object_key}: {e}")
 
