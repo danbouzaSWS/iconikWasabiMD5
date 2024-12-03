@@ -101,8 +101,12 @@ def list_files(prefix, s3_client):
     for page in paginator.paginate(Bucket=BUCKET_NAME, Prefix=prefix):
         time.sleep(1 / GET_LIMIT)  # Enforce rate limit for each paginated request
         for obj in page.get('Contents', []):
-            if not obj['Key'].lower().endswith(tuple(SKIP_EXTENSIONS)):
-                yield obj['Key']
+            key = obj['Key']
+            # Skip files with extensions in SKIP_EXTENSIONS or .md5 files
+            if key.lower().endswith(tuple(SKIP_EXTENSIONS)) or key.lower().endswith(".md5"):
+                logging.debug(f"Skipping file: {key}")
+                continue
+            yield key
 
 
 def main():
